@@ -1,0 +1,20 @@
+name: Add Issue to Project Board
+
+on:
+  issues:
+    types: [opened, labeled, transferred] # Se activa cuando un issue es creado, etiquetado o transferido
+
+jobs:
+  add-to-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add issue to project based on labels
+        uses: actions/add-to-project@v1.0.0 # Asegúrate de usar la última versión estable
+        with:
+          project-url: 'https://github.com/users/arnoldMLE/projects/1' # O project-name: 'Nombre de tu Proyecto' y organization: 'TU_ORGANIZACION'
+          github-token: ${{ secrets.PROJECT_TOKEN }} # Usa el secreto que creaste
+          labeled: 'proyecto-infra, proyecto-netsuite-comercial, proyecto-netsuite-admin-finanzas, proyecto-netsuite-operaciones, proyecto-netsuite-capacitacion, proyecto-hkmate' # Las etiquetas que definiste en Power Automate
+
+      # Paso opcional: Mover a una columna específica (requiere configuración en el proyecto de GitHub)
+      # Esto es más avanzado y podría requerir una acción diferente o GraphQL si las automaciones del proyecto no son suficientes
+      # Para Projects V2, a menudo configuras reglas *dentro* del proyecto para mover elementos.
