@@ -1,0 +1,17 @@
+name: Add Issue to Project Board # Nombre descriptivo para tu acción
+
+on:
+  issues:
+    types: [opened, labeled, transferred] # <--- El "vigilante" se activa cuando un issue se ABRE (creado) o se le pone una ETIQUETA.
+
+jobs:
+  add-to-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add issue to project based on labels
+        uses: actions/add-to-project@v1.0.0 # <--- Esta es la herramienta que añade al proyecto
+        with:
+          project-url: 'https://github.com/users/arnoldMLE/projects/3' # <--- Aquí le dices A QUÉ PROYECTO añadirlo.
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          # Esta línea es la CLAVE para el "ligado"
+          labeled: 'proyecto-infra' # <--- Aquí le dices: "si el issue tiene CUALQUIERA de estas etiquetas, añádelo al project-url de arriba"
